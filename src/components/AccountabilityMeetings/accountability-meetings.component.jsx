@@ -6,6 +6,28 @@ const AccountabilityMeetings = () => {
     <Container>
 
       <MeetingCard>
+
+        <ImageSummary>
+          <Image>
+            <Img src={require("../../assets/accountability/accountability-2023-07-04.png")} alt=""/>
+          </Image>
+          <Summary>
+            <h1> July 4 2023 Meeting Notes & Commitments</h1>
+            <ul>
+              <li>@REINDHARTZ Completed the box for the Bomberman game. Committing to;
+                Completing an animation of the crate breaking.
+              </li>
+
+              <li>@Andrew Portfolio is online, working on custom shader for animated spinning galaxy; Committing to;
+                Completing the animated galaxy portion
+                Complete another hour of r3f
+                Importing animation form
+              </li>
+            </ul>
+            <p>See @everyone in our next accountability meeting this Thursday 😎 💪</p>
+          </Summary>
+        </ImageSummary>
+
         <ImageSummary>
           <Image>
             <Img src={require("../../assets/accountability/accountability-2023-06-27.png")} alt=""/>
@@ -33,11 +55,14 @@ const AccountabilityMeetings = () => {
                 Completing another 30 minutes of 3JS
                 Completing Sign-in
               </li>
-
             </ul>
             <p>See you all in our next accountability meeting on Thursday 💪 😎</p>
+
+
+
           </Summary>
         </ImageSummary>
+
       </MeetingCard>
 
     </Container>

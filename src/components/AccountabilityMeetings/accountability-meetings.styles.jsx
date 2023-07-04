@@ -21,6 +21,7 @@ export const Img = styled.img`
 
 export const ImageSummary = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 10px;
   color: white;
   flex-wrap: wrap;
@@ -35,8 +36,10 @@ export const Image = styled.div`
 `
 
 export const Summary = styled.div`
-  min-width: 45%;
+  width: 50%;
   text-align: justify;
+  margin-left: auto;
+  margin-right: auto;
 `
 
 export const H1 = styled.h1`
