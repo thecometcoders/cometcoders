@@ -9,6 +9,30 @@ const AccountabilityMeetings = () => {
 
         <ImageSummary>
           <Image>
+            <Img src={require("../../assets/accountability/accountability-2023-07-11.png")} alt=""/>
+          </Image>
+          <Summary>
+            <h1> July 11 2023 Meeting Notes & Commitments</h1>
+            <ul>
+              <li>@REINDHARTZ Shared updates to box explosion animation. Committing to;
+                Getting a second background item and to animate
+                Finishing the animation for the box explosion
+              </li>
+
+              <li>@Andrew Galaxy completed, planet completed, tablet completed; Committing to;
+                Fixing occlusion issue with the tablet
+                Completing the iframe website for the tablet
+              </li>
+              <li>@Ale shared the completed appsheet project. Committing to;
+                Find a course or free youtube videos on appsheet
+              </li>
+            </ul>
+            <p>See @everyone in our next accountability meeting this Thursday 😎 💪</p>
+          </Summary>
+        </ImageSummary>
+
+        <ImageSummary>
+          <Image>
             <Img src={require("../../assets/accountability/accountability-2023-07-04.png")} alt=""/>
           </Image>
           <Summary>
