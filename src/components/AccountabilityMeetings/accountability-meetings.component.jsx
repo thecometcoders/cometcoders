@@ -1,93 +1,93 @@
-import {Container, H1, Image, ImageSummary, Img, MeetingCard, Summary} from "./accountability-meetings.styles";
+
+
+import { collection, getDocs } from "firebase/firestore";
+import {db} from '../../firebase.js';
+import {useEffect, useState} from "react";
+
+import MEETING_NOTE_DATA from "../../meeting-note-data-data";
+
+import {addCollectionAndDocuments} from "../../firebase.js";
+
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import {Box, Container, Divider, Stack, Typography} from "@mui/material";
+
 
 const AccountabilityMeetings = () => {
+
+  const [meetingNotes, setMeetingNotes] = useState([]);
+
+  const fetchPost = async () => {
+    await getDocs(collection(db, "meeting-notes"))
+      .then((querySnapshot)=>{
+        const newData = querySnapshot.docs
+          .map((doc) => (doc.data()));
+        setMeetingNotes(newData);
+        console.log(newData);
+      })
+  }
+  useEffect(()=>{
+    fetchPost();
+  }, [])
+
+  useEffect(() => {
+    addCollectionAndDocuments('meeting-notes', MEETING_NOTE_DATA)
+  },[])
+
+  if (!meetingNotes.length) return <h2>Loading....</h2>;
+
   return (
 
-    <Container>
+    <Container >
 
-      <MeetingCard>
-
-        <ImageSummary>
-          <Image>
-            <Img src={require("../../assets/accountability/accountability-2023-07-11.png")} alt=""/>
-          </Image>
-          <Summary>
-            <h1> July 11 2023 Meeting Notes & Commitments</h1>
-            <ul>
-              <li>@REINDHARTZ Shared updates to box explosion animation. Committing to;
-                Getting a second background item and to animate
-                Finishing the animation for the box explosion
-              </li>
-
-              <li>@Andrew Galaxy completed, planet completed, tablet completed; Committing to;
-                Fixing occlusion issue with the tablet
-                Completing the iframe website for the tablet
-              </li>
-              <li>@Ale shared the completed appsheet project. Committing to;
-                Find a course or free youtube videos on appsheet
-              </li>
-            </ul>
-            <p>See @everyone in our next accountability meeting this Thursday 😎 💪</p>
-          </Summary>
-        </ImageSummary>
-
-        <ImageSummary>
-          <Image>
-            <Img src={require("../../assets/accountability/accountability-2023-07-04.png")} alt=""/>
-          </Image>
-          <Summary>
-            <h1> July 4 2023 Meeting Notes & Commitments</h1>
-            <ul>
-              <li>@REINDHARTZ Completed the box for the Bomberman game. Committing to;
-                Completing an animation of the crate breaking.
-              </li>
-
-              <li>@Andrew Portfolio is online, working on custom shader for animated spinning galaxy; Committing to;
-                Completing the animated galaxy portion
-                Complete another hour of r3f
-                Importing animation form
-              </li>
-            </ul>
-            <p>See @everyone in our next accountability meeting this Thursday 😎 💪</p>
-          </Summary>
-        </ImageSummary>
-
-        <ImageSummary>
-          <Image>
-            <Img src={require("../../assets/accountability/accountability-2023-06-27.png")} alt=""/>
-          </Image>
-          <Summary>
-            <h1> June 27 2023 Meeting Notes & Commitments</h1>
-            <ul>
-              <li>@OneBraveHero Showed progress on the styling for the input forms. Committing to;
-                Complete the switch menu completed.
-              </li>
-
-              <li>@REINDHARTZ Shared progress on the blender, cleaning up the skeleton. Committing to;
-                Finish the skeleton clean up.
-              </li>
-
-              <li>@S. Schneider Created a website using;
-                Showing us the Wiz next time, and working on CSS
-              </li>
-
-              <li>@marina 10 year highschool reunion, woo!!! Committing to;
-                Research for a web app idea, taking care of family.
-              </li>
-
-              <li>@Andrew Demonstrated the two apps I am working on. Committing to;
-                Completing another 30 minutes of 3JS
-                Completing Sign-in
-              </li>
-            </ul>
-            <p>See you all in our next accountability meeting on Thursday 💪 😎</p>
-
-
-
-          </Summary>
-        </ImageSummary>
-
-      </MeetingCard>
+      <div>
+        {meetingNotes.map(month => {
+          if (!month) return null;
+          return (
+            <div>
+              <Divider><Typography variant="body2" color="text.secondary">{month.month}</Typography></Divider>
+              <Stack spacing={2}>
+              {month.posts
+                .filter(post => post && post.date)
+                .map(post => {
+                  if (!post) return null;
+                  return (
+                    <Card >
+                      <CardHeader title={post.date} />
+                      {post.image && <CardMedia component="img" image={post.image} /> }
+                      <CardContent>
+                        <Typography variant="body2" color="text.secondary">
+                          {post.notes}
+                        </Typography>
+                        {post.attendees
+                          .filter(attendee => attendee && attendee.name)
+                          .map(attendee => {
+                            if (!attendee) return null;
+                            return (
+                              <>
+                                <Typography variant="h6">
+                                  {attendee.name}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                  Accomplished: {attendee.accomplishments && attendee.accomplishments.join(", ")}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                  Committing to: {attendee.commitments && attendee.commitments.join(", ")}
+                                </Typography>
+                              </>
+                            )
+                          })}
+                      </CardContent>
+                    </Card>
+                  )
+                })}
+              </Stack>
+            </div>
+          )
+        })}
+      </div>
 
     </Container>
 
